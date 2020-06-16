@@ -12,6 +12,10 @@
 	<name>dashboard-backend</name>
 	<description>Dashboard backend</description>
 
+	<properties>
+		<java.version>14</java.version>
+	</properties>
+
 	<dependencies>
  		<dependency>
  			<groupId>com.github.javafaker</groupId>
