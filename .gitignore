@@ -1,0 +1,13 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+node_modules/
+node/
+.cache/
+.project
+.settings
+.classpath
+.vscode
+.factorypath
