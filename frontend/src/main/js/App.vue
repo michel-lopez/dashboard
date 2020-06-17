@@ -1,23 +1,25 @@
 <script>
 import axios from "axios"
 
- const dashboardUrl = "/api/dashboards"
+const dashboardUrl = "/api/dashboards"
 
 export default {
     data () {
         return {
             dashboards : [],
-            active : undefined
+            active : undefined,
+            loading : true
         }
     },
-    methods : {
-        loadDashboards () {
-            axios.get(dashboardUrl)
+    mounted () {
+        axios.get(dashboardUrl)
                 .then(({ data }) => {
                     this.dashboards = data._embedded.dashboards
+                    this.loading = false
                 })
                 .catch(e => {})
-        },
+    },
+    methods : {
         edit(dashboard) {
             this.active = dashboard
         },
@@ -56,9 +58,8 @@ export default {
 
 <template>
     <div>
-        <h1>Hello</h1>
-        <button @click="loadDashboards()">Load</button>
-        <table class="borders">
+        <h1>Dashboard Page </h1>
+        <table class="borders" v-if="!active">
             <caption>Dashboards</caption>
             <thead>
                 <tr>
@@ -75,7 +76,7 @@ export default {
                     <td>{{dashboard.name}}</td>
                 </tr>
                 <tr class="no-data" v-if="!dashboards.length">
-                    <td colspan="2">No data</td>
+                    <td colspan="2">{{loading ? 'Loading...' : 'No data'}}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -85,7 +86,7 @@ export default {
             </tfoot>
         </table>
         
-        <form v-if="active" @submit.prevent="updateActive()">
+        <form class="edit" v-if="active" @submit.prevent="updateActive()">
             <label>Name</label>
             <input v-model="active.name" />
             <input type="submit">
