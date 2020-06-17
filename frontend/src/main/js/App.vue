@@ -1,6 +1,8 @@
 <script>
 import axios from "axios"
 
+ const dashboardUrl = "/api/dashboards"
+
 export default {
     data () {
         return {
@@ -10,7 +12,7 @@ export default {
     },
     methods : {
         loadDashboards () {
-            axios.get("/api/dashboards")
+            axios.get(dashboardUrl)
                 .then(({ data }) => {
                     this.dashboards = data._embedded.dashboards
                 })
@@ -22,6 +24,7 @@ export default {
         remove(dashboard) {
             axios.delete(dashboard._links.self.href)
                 .then(response => {
+                    this.dashboards.splice(this.dashboards.indexOf(dashboard), 1)
                 })
                 .catch(e => {
                     console.log(e)
@@ -29,15 +32,14 @@ export default {
         },
         updateActive() {
             const dashboard = this.active
-            if  (dashboard._links) {
+            if (dashboard._links) {
                 axios.put(dashboard._links.self.href, dashboard)
                     .then(response => {
                         this.active = undefined
-                        this.dashboards.splice(this.dashboard.indexOf(dashboard), 1)
                     })
                     .catch(e => {})
             } else {
-                    axios.post("/api/dashboards", dashboard)
+                    axios.post(dashboardUrl, dashboard)
                     .then(response => {
                         this.active = undefined
                         this.dashboards.push(dashboard)
@@ -56,7 +58,7 @@ export default {
     <div>
         <h1>Hello</h1>
         <button @click="loadDashboards()">Load</button>
-        <table class="borders" v-if="dashboards.length">
+        <table class="borders">
             <caption>Dashboards</caption>
             <thead>
                 <tr>
@@ -65,12 +67,15 @@ export default {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="dashboard in dashboards" :key="dashboard">
+                <tr v-for="(dashboard, i) in dashboards" :key="i">
                     <td>
                         <button @click="edit(dashboard)">edit</button>
                         <button @click="remove(dashboard)">delete</button>
                     </td>
                     <td>{{dashboard.name}}</td>
+                </tr>
+                <tr class="no-data" v-if="!dashboards.length">
+                    <td colspan="2">No data</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -89,8 +94,11 @@ export default {
     </div>
 </template>
 
-<style scoped>
-    table.borders {
-        border: thin solid gray;
-    }
+<style lang="stylus" scoped>
+    table
+    &.borders
+         border thin solid gray
+    &.no-data
+        text-align center
+
 </style>
