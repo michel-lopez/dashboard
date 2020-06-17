@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build --out-dir target/dist src/main/js/index.html",
+    "build": "parcel build --out-dir target/classes/public src/main/js/index.html",
     "serve": "node serve.js"
   },
   "keywords": [],

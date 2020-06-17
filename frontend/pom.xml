@@ -7,7 +7,7 @@
 		<artifactId>dashboard</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.tealorange</groupId>
 	<artifactId>dashboard-frontend</artifactId>
 	<name>Dashboard frontend</name>
 	
