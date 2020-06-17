@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar backend/target/dashboard-backend-0.0.1-SNAPSHOT.jar
