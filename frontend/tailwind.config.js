@@ -1,8 +1,9 @@
 module.exports = {
-  purge: [],
-  theme: {
-    extend: {},
-  },
+  purge: [
+    "./src/**/*.html",
+    "./src/**/*.vue"
+  ],
+  theme: {},
   variants: {},
-  plugins: [],
+  plugins: []
 }
