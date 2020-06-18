@@ -44,7 +44,7 @@ export default {
                     axios.post(dashboardUrl, dashboard)
                     .then(response => {
                         this.active = undefined
-                        this.dashboards.push(dashboard)
+                        this.dashboards.push(response.data)
                     })
                     .catch(e => {})
             }
