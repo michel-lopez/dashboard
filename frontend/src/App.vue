@@ -58,8 +58,8 @@ export default {
 
 <template>
     <div>
-        <h1>Dashboard Page </h1>
-        <table class="borders" v-if="!active">
+        <h1 class="font-semibold text-3xl">Dashboard Page</h1>
+        <table class="border-collapse border border-gray-500" v-if="!active">
             <caption>Dashboards</caption>
             <thead>
                 <tr>
@@ -70,18 +70,26 @@ export default {
             <tbody>
                 <tr v-for="(dashboard, i) in dashboards" :key="i">
                     <td>
-                        <button @click="edit(dashboard)">edit</button>
-                        <button @click="remove(dashboard)">delete</button>
+                        <button 
+                            class="bg-blue-500 hover:bg-blue-700 rounded py-1 px-2 text-white" 
+                            @click="edit(dashboard)">E</button>
+                        <button 
+                            class="bg-red-500 hover:bg-red-700 rounded py-1 px-2 text-white" 
+                            @click="remove(dashboard)">D</button>
                     </td>
                     <td>{{dashboard.name}}</td>
                 </tr>
                 <tr class="no-data" v-if="!dashboards.length">
-                    <td colspan="2">{{loading ? 'Loading...' : 'No data'}}</td>
+                    <td class="center" colspan="2">{{loading ? 'Loading...' : 'No data'}}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2"><button @click="addNew()">Add</button></td>
+                    <td colspan="2">
+                        <button 
+                            class="bg-blue-500 hover:bg-blue-700 rounded py-1 px-2 text-white" 
+                            @click="addNew()">Add</button>
+                    </td>
                 </tr>
             </tfoot>
         </table>
@@ -89,17 +97,13 @@ export default {
         <form class="edit" v-if="active" @submit.prevent="updateActive()">
             <label>Name</label>
             <input v-model="active.name" />
-            <input type="submit">
-            <button @click="active = undefined">cancel</button>
+            <button 
+                class="bg-blue-500 hover:bg-blue-700 rounded py-1 px-2 text-white" 
+                type="submit">Save</button>
+            <!-- Tried to use a more neutral color, but it's being removed by purgecss -->
+            <button
+                class="bg-red-500 hover:bg-red-700 rounded py-1 px-2 text-white"
+                @click="active = undefined">cancel</button>
         </form>
     </div>
 </template>
-
-<style lang="stylus" scoped>
-    table
-    &.borders
-         border thin solid gray
-    &.no-data
-        text-align center
-
-</style>
