@@ -36,7 +36,7 @@ public class Dashboard {
     }
 
     @Convert(converter = DashboardConfigurationConverter.class)
-    private DashboardConfiguration configuration;
+    private DashboardConfiguration configuration = new DashboardConfiguration();
 
     @Cascade(CascadeType.ALL)
     @ManyToMany

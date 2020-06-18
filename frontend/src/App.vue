@@ -50,7 +50,17 @@ export default {
             }
         },
         addNew() {
-            this.active = {}
+            this.active = {
+                configuration : {
+                    columns : []
+                }
+            }
+        },
+        addColumn() {
+            this.active.configuration.columns.push({})
+        },
+        deleteColumn(column) {
+            this.active.configuration.columns.splice(this.active.configuration.columns.indexOf(column), 1)
         }
     }
 }
@@ -94,15 +104,51 @@ export default {
             </tfoot>
         </table>
         
-        <form class="edit" v-if="active" @submit.prevent="updateActive()">
-            <label>Name</label>
-            <input v-model="active.name" />
+        <form v-if="active" @submit.prevent="updateActive()">
+            <div>
+                <label>Name</label>
+                <input v-model="active.name" class="shadow border rounded px-3 py-1" required />
+            </div>
+            <div>
+                <label>Base query</label>
+                <textarea v-model="active.configuration.baseSqlQuery" class="shadow border rounded px-3 py-1" required></textarea>
+            </div>
+            <h2>Columns</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Sql</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(column, i) in active.configuration.columns" :key="i">
+                        <td><input v-model="column.name" class="shadow border rounded w-full px-3 py-1" required /></td>
+                        <td><input v-model="column.sql" class="shadow border rounded w-full px-3 py-1" required /></td>
+                        <td><button 
+                                class="bg-red-500 hover:bg-red-700 rounded py-1 px-2 text-white" 
+                                @click="deleteColumn(column)" type="button">Delete</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <button 
+                                class="bg-blue-500 hover:bg-blue-700 rounded py-1 px-2 text-white" 
+                                @click="addColumn()" type="button">Add</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
             <button 
                 class="bg-blue-500 hover:bg-blue-700 rounded py-1 px-2 text-white" 
                 type="submit">Save</button>
             <!-- Tried to use a more neutral color, but it's being removed by purgecss -->
             <button
-                class="bg-red-500 hover:bg-red-700 rounded py-1 px-2 text-white"
+                class="bg-gray-500 hover:bg-gray-700 rounded py-1 px-2 text-white"
                 @click="active = undefined">cancel</button>
         </form>
     </div>
