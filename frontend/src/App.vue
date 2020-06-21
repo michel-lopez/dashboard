@@ -1,9 +1,13 @@
 <script>
 import axios from "axios"
+import DashboardEdit from "./views/DashboardEdit"
 
 const dashboardUrl = "/api/dashboards"
 
 export default {
+    components : {
+        DashboardEdit
+    },
     data () {
         return {
             dashboards : [],
@@ -68,6 +72,9 @@ export default {
 
 <template>
     <div>
+        <!--
+        <DashboardEdit class="" />
+        -->
         <h1 class="font-semibold text-3xl">Dashboard Page</h1>
         <table class="border-collapse border border-gray-500" v-if="!active">
             <caption>Dashboards</caption>
