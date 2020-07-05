@@ -36,13 +36,13 @@ public class Dashboard {
     }
 
     @Convert(converter = DashboardConfigurationConverter.class)
-    private DashboardConfiguration configuration;
+    private DashboardConfiguration configuration = new DashboardConfiguration();
 
     @Cascade(CascadeType.ALL)
     @ManyToMany
     @JoinTable(
         name = "dashboard_query", 
         joinColumns = @JoinColumn(name = "dashboard_id"), 
-        inverseJoinColumns = @JoinColumn(name = "query_systemid"))
+        inverseJoinColumns = @JoinColumn(name = "query_id"))
     private List<Query> queries = new ArrayList<>();
 }

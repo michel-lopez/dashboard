@@ -8,7 +8,7 @@ app.use(createProxyMiddleware("/api", {
     target : "http://localhost:8080"
 }))
 
-const bundler = new Bundler("src/main/js/index.html", { outDir : "target/dev-dist" })
+const bundler = new Bundler("src/index.html", { outDir : "target/dist" })
 app.use(bundler.middleware())
 
 app.listen(1234)
